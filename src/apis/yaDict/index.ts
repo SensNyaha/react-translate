@@ -5,20 +5,6 @@ type TranslateWordArgsType = {
     lang: string,
     text: string,
 }
-
-type TranslateWordArgsResponse = {
-    def: {
-        text: string,
-        pos: string,
-        ts: string,
-        tr: {
-            text: string,
-            fr: number,
-            mean: Array<{text: string}>
-        }[]
-    }[]
-}
-
 async function loadAvailableLangs(apiKey: typeof YA_DICT_API_KEY): Promise<Array<string>> {
     const first = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/getLangs?key=${apiKey}`)
     const jsoned = await first.json();
@@ -26,9 +12,12 @@ async function loadAvailableLangs(apiKey: typeof YA_DICT_API_KEY): Promise<Array
     return jsoned;
 }
 
-export async function returnLangsObject(): Promise<typeof langObject> {
-    const array = await loadAvailableLangs(YA_DICT_API_KEY);
-    const langObject: {[key: string]: Array<string>} = {};
+type LanguageCanBeTranslatedToObj = {
+    [key: string]: Array<string>
+}
+export async function returnLangsObject(): Promise<LanguageCanBeTranslatedToObj> {
+    const array: string[] = await loadAvailableLangs(YA_DICT_API_KEY);
+    const langObject: LanguageCanBeTranslatedToObj = {};
 
     array.forEach((langPair) => {
         const [left, right] = langPair.split('-');
@@ -46,9 +35,24 @@ export async function returnLangsObject(): Promise<typeof langObject> {
     return langObject;
 }
 
+type TranslationWordObj = {
+    text: string,
+    fr: number,
+    syn: Array<Omit<TranslationWordObj, 'syn' | 'mean'>>,
+    mean: Array<Pick<TranslationWordObj, 'text'>>
+}
+type DefinitionWordObj = {
+    text: string,
+    pos: string,
+    ts: string,
+    tr: Array<TranslationWordObj>
+}
+type TranslateWordArgsResponse = {
+    def: Array<DefinitionWordObj> | [];
+}
 export async function translateWord(configObj: TranslateWordArgsType): Promise<TranslateWordArgsResponse> {
     const first = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${configObj.key}&lang=${configObj.lang}&text=${configObj.text}`)
-    const jsoned = await first.json() as TranslateWordArgsResponse;
+    const jsoned: TranslateWordArgsResponse = await first.json();
 
     return jsoned;
 }
