@@ -20,9 +20,9 @@ export async function returnLangsObject(): Promise<LanguageCanBeTranslatedToObj>
     const langObject: LanguageCanBeTranslatedToObj = {};
 
     array.forEach((langPair) => {
-        const [left, right] = langPair.split('-');
+        const [left, right, ...rest] = langPair.split('-');
 
-        if (left !== right && left.length <= 2 && right.length <= 2) {
+        if (left !== right && left.length <= 2 && right.length <= 2 && rest.length === 0) {
             if (langObject[left]) {
                 langObject[left] = [...langObject[left], right];
             }

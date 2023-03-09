@@ -1,23 +1,70 @@
 import { useEffect, useState } from 'react';
-import { getCountries } from '../../apis/countryName';
+import { getLangs } from '../../apis/countryName';
 import { translateWord, YA_DICT_API_KEY } from '../../apis/yaDict';
+import { langCodeToISO } from '../../helpers/langCodeToISO';
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import './App.scss';
-import { langCodeToISO } from '../../helpers/langCodeToISO';
 
 const App = () => {
     const [currentWord, setCurrentWord] = useState<string>('');
     const [currentInputValue, setCurrentInputValue] = useState<string>('');
-    const [outCountries, setOutCountries] = useState<Awaited<ReturnType<typeof getCountries> | null>>(null);
 
-    const [fromLanguage, setFromLanguage] = useState<string>('ru');
-    const [toLanguage, setToLanguage] = useState<string>('en');
+    const [langs, setLangs] = useState<Awaited<ReturnType<typeof getLangs> | null>>(null);
+    let [fromLangs, setFromLangs] = useState<[string, string][] | null>(null);
+    let [toLangs, setToLangs] = useState<[string, string][] | null>(null);
+
+    const [fromLanguage, setFromLanguage] = useState<string>('');
+    const [toLanguage, setToLanguage] = useState<string>('');
 
     useEffect(() => {
-        getCountries()
-            .then(res => setOutCountries(res))
+        getLangs()
+            .then(res => setLangs(res))
     }, [])
+
+    useEffect(() => {
+        setFromLangs(null);
+        if (langs) {
+            for (let fromLangTuple of langs.keys()) {
+                setFromLangs(fromLangs => {
+                    if (fromLangs) {
+                        return [...fromLangs, fromLangTuple]
+                    }
+                    return [fromLangTuple]
+                })
+            }
+        }
+    }, [langs])
+
+    function handleLangClick (e: React.MouseEvent<HTMLDivElement>) {
+        const clickedLangName = e.currentTarget.dataset.lang;
+
+        if (clickedLangName) {
+            if (e.currentTarget.dataset.langType === 'from') {
+                setFromLanguage(clickedLangName)
+            }
+            else if (e.currentTarget.dataset.langType === 'to') {
+                setToLanguage(clickedLangName)
+            }
+        }
+    }
+    useEffect(() => {
+        setToLangs(null);
+        if (langs) {
+            for (let fromLangTuple of langs.keys()) {
+                if (fromLangTuple[0] === fromLanguage) {
+                    const toLangsTuple = langs.get(fromLangTuple);
+
+                    if (toLangsTuple) {
+                        setToLangs(toLangsTuple);
+                    }
+                }
+                else {
+                    continue
+                }
+            }
+        }
+    }, [fromLanguage])
 
     async function handleSend(currentWord: string, currentInputValue: string, fromLanguage: string, toLanguage: string): Promise<void> {
         if (currentWord !== currentInputValue) {
@@ -41,18 +88,36 @@ const App = () => {
                 {currentWord}
             </div>
             <div className="flags">
-                {outCountries && outCountries.map(country => {
-                    //Изменить некорректное соотношение между названием языка и страны-родителя
-                    const copyCountry = [...country];
-                    copyCountry[0] = langCodeToISO(copyCountry[0]);
+                <div className="flags__from">
+                    {
+                        fromLangs && fromLangs.map(lang => {
+                            const copy = [...lang];
+                            copy[0] = langCodeToISO(copy[0]);
 
-                    return (
-                        <div>
-                            <span className={`fi fi-${copyCountry[0]}`}></span>
-                            {copyCountry[1]}
-                        </div>
-                    )
-                })}
+                            return (
+                                <div data-lang={lang[0]} data-lang-type='from' onClick={handleLangClick}>
+                                    <span className={`fi fi-${copy[0]}`}></span>
+                                    {copy[1]}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className="flags__to">
+                    {
+                        toLangs && toLangs.map(lang => {
+                            const copy = [...lang];
+                            copy[0] = langCodeToISO(copy[0]);
+
+                            return (
+                                <div data-lang={lang[0]} data-lang-type='to' onClick={handleLangClick}>
+                                    <span className={`fi fi-${copy[0]}`}></span>
+                                    {copy[1]}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </>
     );
