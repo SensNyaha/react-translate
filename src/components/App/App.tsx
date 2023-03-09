@@ -4,18 +4,7 @@ import { translateWord, YA_DICT_API_KEY } from '../../apis/yaDict';
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import './App.scss';
-
-const fixBadLangBinary: {[key: string]: string} = {
-    be: 'by',
-    cs: 'cz',
-    da: 'dk',
-    el: 'gr',
-    en: 'gb',
-    et: 'ee',
-    sv: 'se',
-    uk: 'ua',
-    zh: 'cn'
-}
+import { langCodeToISO } from '../../helpers/langCodeToISO';
 
 const App = () => {
     const [currentWord, setCurrentWord] = useState<string>('');
@@ -54,21 +43,13 @@ const App = () => {
             <div className="flags">
                 {outCountries && outCountries.map(country => {
                     //Изменить некорректное соотношение между названием языка и страны-родителя
-                    if (country[0] in fixBadLangBinary) {
-                        country[0] = fixBadLangBinary[country[0]]
-                    }
-                    if (country[1] in fixBadLangBinary) {
-                        country[1] = fixBadLangBinary[country[1]]
-                    }
-                    // Убрать все коды, в которых более 3ех символов
-                    if (country[0].length > 2) {
-                        return null
-                    }
+                    const copyCountry = [...country];
+                    copyCountry[0] = langCodeToISO(copyCountry[0]);
 
                     return (
                         <div>
-                            <span className={`fi fi-${country[0]}`}></span>
-                            {country[1]}
+                            <span className={`fi fi-${copyCountry[0]}`}></span>
+                            {copyCountry[1]}
                         </div>
                     )
                 })}

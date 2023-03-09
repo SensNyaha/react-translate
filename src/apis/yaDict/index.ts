@@ -22,7 +22,7 @@ export async function returnLangsObject(): Promise<LanguageCanBeTranslatedToObj>
     array.forEach((langPair) => {
         const [left, right] = langPair.split('-');
 
-        if (left !== right) {
+        if (left !== right && left.length <= 2 && right.length <= 2) {
             if (langObject[left]) {
                 langObject[left] = [...langObject[left], right];
             }
