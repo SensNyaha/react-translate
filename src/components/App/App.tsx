@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { SingleValue } from 'react-select/dist/declarations/src';
+
 import { getLangs } from '../../apis/countryName';
 import { translateWord, YA_DICT_API_KEY } from '../../apis/yaDict';
-import { langCodeToISO } from '../../helpers/langCodeToISO';
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import './App.scss';
+import LanguageSelect from '../LanguageSelect/LanguageSelect';
 
 const App = () => {
     const [currentWord, setCurrentWord] = useState<string>('');
@@ -36,20 +38,19 @@ const App = () => {
         }
     }, [langs])
 
-    function handleLangClick (e: React.MouseEvent<HTMLDivElement>) {
-        const clickedLangName = e.currentTarget.dataset.lang;
-
-        if (clickedLangName) {
-            if (e.currentTarget.dataset.langType === 'from') {
-                setFromLanguage(clickedLangName)
-            }
-            else if (e.currentTarget.dataset.langType === 'to') {
-                setToLanguage(clickedLangName)
-            }
+    function handleChangeLangFrom(e: SingleValue<{ value: string; label: Element; }>){
+        if (e && e.value) {
+            setFromLanguage(e.value);
+        }
+    }
+    function handleChangeLangTo(e: SingleValue<{ value: string; label: Element; }>){
+        if (e && e.value) {
+            setToLanguage(e.value);
         }
     }
     useEffect(() => {
         setToLangs(null);
+        setToLanguage('');
         if (langs) {
             for (let fromLangTuple of langs.keys()) {
                 if (fromLangTuple[0] === fromLanguage) {
@@ -90,32 +91,14 @@ const App = () => {
             <div className="flags">
                 <div className="flags__from">
                     {
-                        fromLangs && fromLangs.map(lang => {
-                            const copy = [...lang];
-                            copy[0] = langCodeToISO(copy[0]);
-
-                            return (
-                                <div data-lang={lang[0]} data-lang-type='from' onClick={handleLangClick}>
-                                    <span className={`fi fi-${copy[0]}`}></span>
-                                    {copy[1]}
-                                </div>
-                            )
-                        })
+                        fromLangs && 
+                            <LanguageSelect availableLangArray={fromLangs} onChange={handleChangeLangFrom} placeholder='Choose first language'/>
                     }
                 </div>
                 <div className="flags__to">
                     {
-                        toLangs && toLangs.map(lang => {
-                            const copy = [...lang];
-                            copy[0] = langCodeToISO(copy[0]);
-
-                            return (
-                                <div data-lang={lang[0]} data-lang-type='to' onClick={handleLangClick}>
-                                    <span className={`fi fi-${copy[0]}`}></span>
-                                    {copy[1]}
-                                </div>
-                            )
-                        })
+                        toLangs && 
+                            <LanguageSelect to={true} availableLangArray={toLangs} onChange={handleChangeLangTo} placeholder='Choose second language'/>
                     }
                 </div>
             </div>

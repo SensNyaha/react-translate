@@ -1,0 +1,10 @@
+.lang-select {
+    &__item {
+        display: flex;
+        column-gap: 20px;
+
+        & > * {
+            flex-shrink: 0;
+        }
+     }
+}
