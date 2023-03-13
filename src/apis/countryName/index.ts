@@ -4,33 +4,29 @@ import { getNativeName } from 'all-iso-language-codes'
 type ShortLangName = string;
 type LongLangNativeName = string;
 
-type StringDuoTuple = [string, string];
-
-export async function getLangs(): Promise<typeof countriesMap> {
+export async function getLangs(): Promise<{[key: string]: string[]}> {
     const translatableLangsObj = await returnLangsObject();
 
-    // const outCountriesInfoArray: Array<[string, string]> = [];
-    const countriesMap: Map<StringDuoTuple, StringDuoTuple[]> = new Map();
+    const countriesObject: {[key: string]: string[]} = {};
 
     Object.keys(translatableLangsObj).forEach((lang: ShortLangName) => {
         const langNativeName: LongLangNativeName | null = getNativeName(lang);
 
         if (langNativeName) {
-            const langTuple: StringDuoTuple = [lang, langNativeName];
-            countriesMap.set(langTuple, []);
+            const langPair: string = `${lang}-${langNativeName}`;
+            countriesObject[langPair] = [];
     
             translatableLangsObj[lang].forEach((sublang: ShortLangName) => {
                 const sublangNativeName: LongLangNativeName | null = getNativeName(sublang);
 
                 if (sublangNativeName) {
-                    const sublangTuple: StringDuoTuple = [sublang, sublangNativeName];
+                    const sublangPair: string = `${sublang}-${sublangNativeName}`;
 
-                    countriesMap.set(langTuple, [...countriesMap.get(langTuple)!, sublangTuple])
+                    countriesObject[langPair] = [...countriesObject[langPair], sublangPair]
                 }
-
             }) 
         }
     })
 
-    return countriesMap;
+    return countriesObject;
 }
