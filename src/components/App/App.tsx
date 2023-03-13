@@ -8,8 +8,17 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import './App.scss';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 
+
+import { setCurrentWord } from '../../store/actions/appActions';
+import {useDispatch, useSelector} from 'react-redux';
+
 const App = () => {
-    const [currentWord, setCurrentWord] = useState<string>('');
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state);
+
+
+    const [currentWord, setCurrentWord1] = useState<string>('');
     const [currentInputValue, setCurrentInputValue] = useState<string>('');
 
     const [langs, setLangs] = useState<Awaited<ReturnType<typeof getLangs> | null>>(null);
@@ -75,14 +84,16 @@ const App = () => {
         }
     }, [toLangs])
 
-    async function handleSend(currentWord: string, currentInputValue: string, fromLanguage: string, toLanguage: string): Promise<void> {
-        if (currentWord !== currentInputValue) {
-            const response = await translateWord({key: YA_DICT_API_KEY, lang: `${fromLanguage}-${toLanguage}`, text: currentInputValue});
+    function handleSend(currentWord: string, currentInputValue: string, fromLanguage: string, toLanguage: string): void {
+        // if (currentWord !== currentInputValue) {
+        //     const response = await translateWord({key: YA_DICT_API_KEY, lang: `${fromLanguage}-${toLanguage}`, text: currentInputValue});
 
-            if (response.def.length) {
-                setCurrentWord(response.def[0].tr[0].text || ''); //здесь надо будет выводить ВСЕ результаты и показывать их fr показатель графически
-            }
-        }
+        //     if (response.def.length) {
+        //         setCurrentWord(response.def[0].tr[0].text || ''); //здесь надо будет выводить ВСЕ результаты и показывать их fr показатель графически
+        //     }
+        // }
+
+        dispatch(setCurrentWord(currentInputValue))
     }
 
     return ( 
@@ -96,8 +107,8 @@ const App = () => {
             <div className="result">
                 {currentWord}
             </div>
-            <div className="flags">
-                <div className="flags__from">
+            <div className="select">
+                <div className="select__from">
                     {
                         fromLangs && 
                             <LanguageSelect 
@@ -108,7 +119,7 @@ const App = () => {
                             />
                     }
                 </div>
-                <div className="flags__to">
+                <div className="select__to">
                     {
                         toLangs && 
                             <LanguageSelect 
