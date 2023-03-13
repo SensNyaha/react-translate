@@ -49,8 +49,6 @@ const App = () => {
         }
     }
     useEffect(() => {
-        setToLangs(null);
-        setToLanguage('');
         if (langs) {
             for (let fromLangTuple of langs.keys()) {
                 if (fromLangTuple[0] === fromLanguage) {
@@ -66,6 +64,16 @@ const App = () => {
             }
         }
     }, [fromLanguage])
+    useEffect(() => {
+        if (toLangs && toLangs.length) {
+            if (toLangs.findIndex(l => l[0][0] === 'ru') && fromLanguage !== 'ru') {
+                setToLanguage('ru')
+            }
+            else {
+                setToLanguage(toLangs[0][0])
+            }
+        }
+    }, [toLangs])
 
     async function handleSend(currentWord: string, currentInputValue: string, fromLanguage: string, toLanguage: string): Promise<void> {
         if (currentWord !== currentInputValue) {
@@ -92,13 +100,24 @@ const App = () => {
                 <div className="flags__from">
                     {
                         fromLangs && 
-                            <LanguageSelect availableLangArray={fromLangs} onChange={handleChangeLangFrom} placeholder='Choose first language'/>
+                            <LanguageSelect 
+                                currentLang={fromLanguage}
+                                availableLangArray={fromLangs} 
+                                onChange={handleChangeLangFrom} 
+                                placeholder='Choose first language'
+                            />
                     }
                 </div>
                 <div className="flags__to">
                     {
                         toLangs && 
-                            <LanguageSelect to={true} availableLangArray={toLangs} onChange={handleChangeLangTo} placeholder='Choose second language'/>
+                            <LanguageSelect 
+                                currentLang={toLanguage}
+                                to={true} 
+                                availableLangArray={toLangs} 
+                                onChange={handleChangeLangTo} 
+                                placeholder='Choose second language'
+                            />
                     }
                 </div>
             </div>

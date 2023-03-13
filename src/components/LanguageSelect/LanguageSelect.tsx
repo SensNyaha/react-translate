@@ -9,15 +9,12 @@ interface LanguageSelectProps {
     onChange: (e: SingleValue<{ value: string; label: Element; }>) => void;
     availableLangArray: [string, string][] | null;
     placeholder: string,
-    to?: boolean
+    currentLang: string,
+    to?: boolean,
 }
 
-const LanguageSelect = ({onChange, availableLangArray, placeholder, to } : LanguageSelectProps) => {
-    return (                         
-        <Select 
-            onChange={onChange}
-            placeholder={placeholder}
-            options={availableLangArray?.map(lang => {
+function langArrayToOptionObj (availableLangArray: LanguageSelectProps['availableLangArray']) {
+    return availableLangArray?.map(lang => {
                 const langCopy = [...lang];
 
                 langCopy[0] = langCodeToISO(langCopy[0]);
@@ -33,7 +30,20 @@ const LanguageSelect = ({onChange, availableLangArray, placeholder, to } : Langu
                 }
 
                 return result
-            })}
+            })
+}
+
+function getLangObj (shortLangName: string, langObjArray: ReturnType<typeof langArrayToOptionObj>) {
+    return langObjArray?.find(l => l.value === shortLangName);
+}
+
+const LanguageSelect = ({onChange, availableLangArray, placeholder, currentLang, to } : LanguageSelectProps) => {
+    return (                         
+        <Select 
+            onChange={onChange}
+            placeholder={placeholder}
+            options={langArrayToOptionObj(availableLangArray)}
+            value = {getLangObj(currentLang, langArrayToOptionObj(availableLangArray))}
         />
      );
 }
