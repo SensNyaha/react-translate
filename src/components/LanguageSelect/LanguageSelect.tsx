@@ -58,12 +58,14 @@ const LanguageSelect = ({placeholder, type} : LanguageSelectProps) => {
 
     const onChange = type === 'from' ? (e: SingleValue<{ value: string; label: Element; }>) => {handleChangeLangFrom(e, dispatchAsync)} : (e: SingleValue<{ value: string; label: Element; }>) => {handleChangeLangTo(e, dispatch)};
 
+    const value = getLangObj(currentLanguage, currentLangOptionsObj) || null;
+
     return (                         
         <Select 
             onChange={onChange}
             placeholder={placeholder || undefined}
             options={currentLangOptionsObj}
-            value = {getLangObj(currentLanguage, currentLangOptionsObj)}
+            value = {value}
             isSearchable={false}
         />
      );
