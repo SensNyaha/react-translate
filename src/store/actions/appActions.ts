@@ -27,7 +27,10 @@ export const translateCurrentWord = () => async (dispatch: ThunkDispatch<ReturnT
     const response = await translateWord({key: YA_DICT_API_KEY, lang: `${fromLanguage}-${toLanguage}`, text: currentInput});
 
     if (response.def.length) {
-        dispatch(setTranslation(response.def[0].tr[0].text || '')) //здесь надо будет выводить ВСЕ результаты и показывать их fr показатель графически
+        dispatch(setTranslation(response.def[0].tr[0].text || 'Перевести слово невозможно')) //здесь надо будет выводить ВСЕ результаты и показывать их fr показатель графически
+    }
+    else {
+        dispatch(setTranslation('Перевести слово невозможно'))
     }
 }
 

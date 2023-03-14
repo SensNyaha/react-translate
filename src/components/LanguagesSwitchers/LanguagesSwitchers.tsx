@@ -22,7 +22,7 @@ const LanguagesSwitchers = () => {
                     state.fromLangs?.length && 
                         <LanguageSelect 
                             type='from'
-                            placeholder='Choose first language'
+                            placeholder={'Choose first language'.toUpperCase()}
                         />
                 }
                 {
@@ -32,12 +32,12 @@ const LanguagesSwitchers = () => {
                     state.toLangs?.length 
                     ?   <LanguageSelect 
                             type='to' 
-                            placeholder='Choose second language'
+                            placeholder={'Choose second language'.toUpperCase()}
                         /> 
                     : state.fromLangs?.length 
                     ?   <LanguageSelect 
                             hidden={true}
-                            placeholder='Choose second language'
+                            placeholder={'Choose second language'.toUpperCase()}
                         />
                     : null
                 }
