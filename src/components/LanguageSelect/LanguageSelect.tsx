@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select, { SingleValue } from 'react-select';
 
@@ -9,9 +9,13 @@ import { IAppReducer } from '../../store/reducers/appReducer';
 
 import './LanguageSelect.scss';
 
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+
 interface LanguageSelectProps {
     placeholder?: string;
-    type?: string
+    type?: string;
+    hidden?: boolean
 }
 
 function langObjToOptionObj (langs: [string, string][] | null) {
@@ -48,7 +52,13 @@ function handleChangeLangTo(e: SingleValue<{ value: string; label: Element; }>, 
     }
 }
 
-const LanguageSelect = ({placeholder, type} : LanguageSelectProps) => {
+function renderMenuWithScrollbar (props: {children: React.ReactNode}) {
+    return (
+        <SimpleBar style={{ maxHeight: 300 }}>{props.children}</SimpleBar>
+      );
+}
+
+const LanguageSelect = ({placeholder, type, hidden} : LanguageSelectProps) => {
     const dispatch = useDispatch();
     const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
@@ -62,11 +72,14 @@ const LanguageSelect = ({placeholder, type} : LanguageSelectProps) => {
 
     return (                         
         <Select 
+            isDisabled = {hidden}
             onChange={onChange}
             placeholder={placeholder || undefined}
             options={currentLangOptionsObj}
             value = {value}
             isSearchable={false}
+            classNamePrefix="lang-select"
+            components={{ MenuList: renderMenuWithScrollbar}}
         />
      );
 }
