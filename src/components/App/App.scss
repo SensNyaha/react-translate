@@ -6,3 +6,12 @@
         flex-grow: 1;
     }
 }
+
+body {
+    overflow-y: hidden;
+    margin: 0;
+}
+
+#root {
+    padding: 5px;
+}

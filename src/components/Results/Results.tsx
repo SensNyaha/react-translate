@@ -5,11 +5,7 @@ import { IAppReducer } from '../../store/reducers/appReducer';
 import './Results.scss';
 import audioIconGIF from './audio.gif';
 import audioIconPNG from './audio.png';
-
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-
-import { Accordion, AccordionItem } from '@szhsin/react-accordion';
+import ResultsAccordion from '../ResultsAccordion/ResultsAccordion';
 
 const Results = () => {
     const [audioHover, setAudioHover] = useState(false);
@@ -17,8 +13,8 @@ const Results = () => {
 
     if (typeof state.translation === 'object' && state.translation) {
         return ( 
-        <div className="result">
-            <div className="result__preview">
+        <div className="results">
+            <div className="results__preview">
                 <div className="result__word">
                     {state.translation[0].text.split('').map((l, i) => i === 0 ? l.toUpperCase() : l.toLowerCase())}
                 </div>
@@ -33,23 +29,7 @@ const Results = () => {
                     onMouseLeave={() => setAudioHover(false)}
                 />
             </div>
-            { state.translation.map(t => {
-                const summaryFreq = t.tr.reduce((sum, cur) => sum += cur.fr, 0)
-                return (
-                    <Accordion>
-                        <AccordionItem header={t.pos}>
-                            {t.tr.map(tr => (
-                                <div className='result__item'>
-                                    <div className="result__item-text">
-                                        {tr.text}
-                                    </div>
-                                    <CircularProgressbar value={+tr.fr / summaryFreq * 100} text={`${Math.floor(+tr.fr / summaryFreq * 100)}%`} />
-                                </div>
-                            ))}
-                        </AccordionItem>
-                    </Accordion>
-                )
-            })}
+            <ResultsAccordion/>
         </div>
     )}
 
