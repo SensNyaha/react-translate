@@ -2,7 +2,7 @@ import { getLangs } from "../../apis/countryName";
 
 export interface IAppReducer {
     currentInput: string,
-    translation: any,
+    translation: Array<DefinitonObject> | string | null,
 
     uploadedLangs: Awaited<ReturnType<typeof getLangs> | null>
 
@@ -11,6 +11,21 @@ export interface IAppReducer {
 
     fromLanguage: string,
     toLanguage: string,
+}
+
+type DefinitonObject = {
+    text: string,
+    pos: string,
+    ts: string,
+    tr: Array<TranslationObject>
+}
+type TranslationObject = {
+    text: string,
+    pos: string,
+    gen: string,
+    fr: number,
+    syn: Omit<TranslationObject, 'syn' | 'mean'>,
+    mean: Array<{text: string}>
 }
 
 type ActionType = {
@@ -41,7 +56,7 @@ export function appReducer(state: IAppReducer = initialAppState, action: ActionT
         case 'SET_TRANSLATION': 
             return {
                 ...state,
-                translation: action.payload
+                translation: action.payload as IAppReducer['translation']
             }
         case 'SET_UPLOADED_LANGS': 
             return {

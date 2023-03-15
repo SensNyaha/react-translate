@@ -13,10 +13,14 @@ const WordInputForm = () => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
 
     return ( 
-        <form className="input-form" onSubmit={(e)=> {
-            e.preventDefault();
-            dispatchAsync(translateCurrentWord());
-        }}>
+        <form 
+            className="input-form" 
+            onSubmit={(e)=> {
+                e.preventDefault();
+                dispatchAsync(translateCurrentWord());
+            }}
+            style={{pointerEvents: (state.fromLanguage && state.toLanguage) ? 'all' : 'none'}}
+        >
         <input className="input-form__input" type="text" value={state.currentInput} onChange={(e) => {dispatch(setCurrentInput(e.target.value))}}/>
         <button className="input-form__button">
             <img src={arrowRight} alt="" />
