@@ -5,6 +5,7 @@ import { setCurrentInput, translateCurrentWord } from "../../store/actions/appAc
 import { IAppReducer } from "../../store/reducers/appReducer";
 
 import './WordInputForm.scss';
+import arrowRight from './arrow-right.png';
 
 const WordInputForm = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const WordInputForm = () => {
         }}>
         <input className="input-form__input" type="text" value={state.currentInput} onChange={(e) => {dispatch(setCurrentInput(e.target.value))}}/>
         <button className="input-form__button">
-                Отправить
+            <img src={arrowRight} alt="" />
         </button>
         </form> );
 }
