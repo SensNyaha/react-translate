@@ -1,4 +1,40 @@
 .result {
-    width: 200px;
-    height: 200px;
+    font-family: sans-serif;
+
+    &__item {
+        border: solid 1px #1D71A0;
+        border-radius: 12px;
+
+        padding: 20px 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-text {
+            flex-shrink: 0;
+        }
+    }
+
+    &__preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        
+        font-size: 40px;
+    }
+    &__ts {
+        font-size: 32px;
+        color:grey;
+    }
+    
+    .CircularProgressbar {
+        height: 40px;
+
+        width: auto;
+    }
+    .CircularProgressbar .CircularProgressbar-text {
+        font-size: 30px;
+    }
 }
