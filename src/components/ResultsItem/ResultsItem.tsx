@@ -14,7 +14,7 @@ import { Dispatch } from "react";
 
 const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordObj, summaryFreq: number}) => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
-    const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>
+    const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>;
     
     return ( <div className='results__item'>
         <ContextMenuTrigger id={`main-result-${text}`}>
@@ -32,7 +32,7 @@ const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordOb
                     className="results__context"
                 >
                     Translate this word to {
-                        state.fromLangs?.find(l => l[0] === state.fromLanguage)?.[1].toLowerCase()
+                        state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()
                     }
                 </div>
             </ContextMenuItem>
@@ -64,7 +64,7 @@ const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordOb
                                         className="results__context"
                                     >
                                         Translate this word to {
-                                            state.fromLangs?.find(l => l[0] === state.fromLanguage)?.[1].toLowerCase()
+                                            state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()
                                         }
                                     </div>
                                 </ContextMenuItem>

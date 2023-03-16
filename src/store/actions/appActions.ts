@@ -21,14 +21,21 @@ export const setTranslation = (value: any) => {
         payload: value,
     }
 }
+export const setTranslationLangs = () => {
+    return {
+        type: 'SET_TRANSLATION_LANGS',
+        payload: {from: store.getState().fromLanguage, to: store.getState().toLanguage},
+    }
+}
 export const translateCurrentWord = () => async (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
     const { fromLanguage, toLanguage, currentInput } = store.getState();
 
     const response = await translateWord({key: YA_DICT_API_KEY, lang: `${fromLanguage}-${toLanguage}`, text: currentInput});
 
     if (response.def.length) {
-        console.log(response)
-        dispatch(setTranslation(response.def || 'Перевести слово невозможно'))
+        dispatch(setTranslation(response.def));
+        dispatch(setPreviousWords({value: currentInput, from: fromLanguage, to: toLanguage}))
+        dispatch(setTranslationLangs());
     }
     else {
         dispatch(setTranslation('Перевести слово невозможно'))
@@ -59,7 +66,11 @@ const setFromLangs = () => {
 const setToLangs = (fromLanguage: string) => {
     const { uploadedLangs } = store.getState();
 
-    const neededKey = Object.keys(uploadedLangs!).find(k => k.split('-')[0] === fromLanguage) as keyof typeof uploadedLangs;
+    console.log(Object.keys(uploadedLangs!))
+    const neededKey = Object.keys(uploadedLangs!).find(k => {
+        console.log(k.split('-')[0], fromLanguage);
+        return k.split('-')[0] === fromLanguage
+    }) as keyof typeof uploadedLangs;
 
     return {
         type: 'SET_TO_LANGS',
@@ -95,13 +106,24 @@ export const swapLanguages = () => (dispatch: ThunkDispatch<ReturnType<typeof ap
     const {toLanguage, fromLanguage} = store.getState();
 
     dispatch(setFromLanguage(toLanguage));
-    dispatch(setToLanguage(fromLanguage));
     dispatch(setToLangs(toLanguage));
+    dispatch(setToLanguage(fromLanguage));
 }
 
 export const translateResultedWord = (wordToTranslate: string) => (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
-    console.log(wordToTranslate)
-    dispatch(swapLanguages());
+    const {translatedTo, translatedFrom} = store.getState();
+
+    dispatch(setFromLanguage(translatedTo));
+    dispatch(setToLangs(translatedTo));
+    dispatch(setToLanguage(translatedFrom));
+
     dispatch(setCurrentInput(wordToTranslate));
     dispatch(translateCurrentWord());
+}
+
+const setPreviousWords = (payload: {value: string, from: string, to: string}) => {
+    return {
+        type: 'SET_PREVIOUS_WORDS',
+        payload
+    }
 }

@@ -4,7 +4,11 @@ import { DefinitionWordObj } from "../../apis/yaDict";
 
 export interface IAppReducer {
     currentInput: string,
+    previousWords: {value: string, from: string, to: string}[],
+    
     translation: Array<DefinitionWordObj> | string | null,
+    translatedFrom: string,
+    translatedTo: string,
 
     uploadedLangs: Awaited<ReturnType<typeof getLangs> | null>
 
@@ -22,7 +26,11 @@ type ActionType = {
 
 const initialAppState: IAppReducer = {
     currentInput: '',
+    previousWords: [],
+
     translation: null,
+    translatedFrom: '',
+    translatedTo: '',
 
     uploadedLangs: null,
 
@@ -33,7 +41,7 @@ const initialAppState: IAppReducer = {
     toLanguage: ''
 }
 
-export function appReducer(state: IAppReducer = initialAppState, action: ActionType) {
+export function appReducer(state: IAppReducer = initialAppState, action: ActionType): IAppReducer {
     switch (action.type) {
         case 'SET_CURRENT_INPUT': 
             return {
@@ -44,6 +52,12 @@ export function appReducer(state: IAppReducer = initialAppState, action: ActionT
             return {
                 ...state,
                 translation: action.payload as IAppReducer['translation']
+            }
+        case 'SET_TRANSLATION_LANGS':
+            return {
+                ...state,
+                translatedFrom: (action as any).payload.from,
+                translatedTo: (action as any).payload.to
             }
         case 'SET_UPLOADED_LANGS': 
             return {
@@ -70,7 +84,11 @@ export function appReducer(state: IAppReducer = initialAppState, action: ActionT
                 ...state,
                 toLanguage: action.payload as string
             }
-
+        case 'SET_PREVIOUS_WORDS':
+            return {
+                ...state,
+                previousWords: [action.payload as {value: string, from: string, to: string}, ...state.previousWords]
+            }
         default: 
             return state
     }
