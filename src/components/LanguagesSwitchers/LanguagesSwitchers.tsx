@@ -27,6 +27,13 @@ const LanguagesSwitchers = () => {
                 }
                 {
                     <img 
+                        style={
+                            {
+                                opacity: state.toLanguage && state.fromLanguage ? '1' : '0', 
+                                cursor: state.toLanguage && state.fromLanguage ? 'pointer' : 'default',
+                                pointerEvents: state.toLanguage && state.fromLanguage ? 'all' : 'none'
+                            }
+                        }
                         src={arrows} 
                         alt="arrow" 
                         className='lang-select__arrow'

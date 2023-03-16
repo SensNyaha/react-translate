@@ -26,6 +26,8 @@
 
         &-text {
             flex-shrink: 0;
+            // cursor: url("https://img.icons8.com/fluency/52/menubar.png") 27 18, auto;
+            cursor: url("https://img.icons8.com/color/32/top-menu.png") 12 0, auto;
         }
         &-similar {
             width: 100%;
@@ -43,5 +45,8 @@
         &:hover {
             background-color: #afe8ff;
         }
+    }
+    &__context {
+        cursor:context-menu;
     }
 }
