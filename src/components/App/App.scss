@@ -10,8 +10,10 @@
 body {
     overflow-y: hidden;
     margin: 0;
+    height: 100vh;
 }
 
 #root {
     padding: 5px;
+    height: 100%;
 }

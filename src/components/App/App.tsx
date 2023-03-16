@@ -11,7 +11,7 @@ import 'simplebar-react/dist/simplebar.min.css';
 
 const App = () => {
     return ( 
-        <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)' }}>
+        <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }}>
             <LanguagesSwitchers/>
             <WordInputForm/>
             <Results/>
