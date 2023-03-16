@@ -47,7 +47,30 @@ const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordOb
                     const prefix = i === 0 ? ' ' : '';
                     const postfix = i === syn.length - 1 ? '.' : ', ';
 
-                    return <span key={s.text}>{prefix + s.text + postfix}</span>
+                    return <span key={s.text}>{
+                        <>
+                            <ContextMenuTrigger id={`main-result-${s.text}`}>
+                                <div className="results__item-similar-text">
+                                    {prefix + s.text + postfix}
+                                </div>
+                            </ContextMenuTrigger>
+                            <ContextMenu 
+                                id={`main-result-${s.text}`}
+                                hideOnLeave={true}    
+                            >
+                                <ContextMenuItem >
+                                    <div
+                                        onClick={() => dispatchAsync(translateResultedWord(s.text))}
+                                        className="results__context"
+                                    >
+                                        Translate this word to {
+                                            state.fromLangs?.find(l => l[0] === state.fromLanguage)?.[1].toLowerCase()
+                                        }
+                                    </div>
+                                </ContextMenuItem>
+                            </ContextMenu>
+                        </>
+                    }</span>
                 })}
             </div>
             : null

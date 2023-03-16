@@ -1,3 +1,7 @@
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { IAppReducer } from '../../store/reducers/appReducer';
+
 import LanguagesSwitchers from '../LanguagesSwitchers/LanguagesSwitchers';
 import WordInputForm from '../WordInputForm/WordInputForm';
 import Results from '../Results/Results';
@@ -10,8 +14,15 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
 const App = () => {
+    const state = useSelector((state: IAppReducer) => state) as IAppReducer;
+    const scrollRef = useRef();
+
+    useEffect(() => {
+        (scrollRef.current! as HTMLDivElement).scrollTo(0,0);
+    }, [state.currentInput])
+
     return ( 
-        <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }}>
+        <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }} scrollableNodeProps={{ref: scrollRef}}>
             <LanguagesSwitchers/>
             <WordInputForm/>
             <Results/>
