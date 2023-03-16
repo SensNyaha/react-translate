@@ -98,3 +98,10 @@ export const swapLanguages = () => (dispatch: ThunkDispatch<ReturnType<typeof ap
     dispatch(setToLanguage(fromLanguage));
     dispatch(setToLangs(toLanguage));
 }
+
+export const translateResultedWord = (wordToTranslate: string) => (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
+    console.log(wordToTranslate)
+    dispatch(swapLanguages());
+    dispatch(setCurrentInput(wordToTranslate));
+    dispatch(translateCurrentWord());
+}

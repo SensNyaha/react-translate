@@ -5,6 +5,7 @@ import { Accordion, AccordionItem as Item } from '@szhsin/react-accordion';
 
 import './ResultsAccordion.scss';
 import ResultsItem from '../ResultsItem/ResultsItem';
+import React from 'react';
 
 const AccordionItem = ({ header, ...rest } : {[key: string]: React.ReactNode}) => (
     <Item
@@ -24,10 +25,10 @@ const ResultsAccordion = () => {
     
     return ( 
         <Accordion transition transitionTimeout={200}>
-            { Array.isArray(state.translation) && state.translation.map(t => {
+            { Array.isArray(state.translation) && state.translation.map((t, i) => {
                 const summaryFreq = t.tr.reduce((sum, cur) => sum += cur.fr, 0);
                 return (
-                        <AccordionItem header={t.pos} key={'accordion' + Math.random()}>
+                        <AccordionItem header={t.pos} key={'accordion' + Math.random()} initialEntered={i === 0}>
                             {t.tr.map(tr => (
                                 <ResultsItem tr={tr} summaryFreq={summaryFreq} key={'result' + Math.random()}/>
                             ))}
@@ -38,4 +39,4 @@ const ResultsAccordion = () => {
      );
 }
  
-export default ResultsAccordion;
+export default React.memo(ResultsAccordion);

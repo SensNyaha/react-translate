@@ -8,26 +8,33 @@ import './ResultsItem.scss';
 import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextmenu';
 import { useSelector } from "react-redux";
 import { IAppReducer } from "../../store/reducers/appReducer";
+import { translateResultedWord } from "../../store/actions/appActions";
+import { store } from "../../store";
+import { Dispatch } from "react";
 
 const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordObj, summaryFreq: number}) => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
+    const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>
     
     return ( <div className='results__item'>
-        <ContextMenuTrigger id="main-result">
+        <ContextMenuTrigger id={`main-result-${text}`}>
             <div className="results__item-text">
                 {text}
             </div>
         </ContextMenuTrigger>
         <ContextMenu 
-            id="main-result"
+            id={`main-result-${text}`}
             hideOnLeave={true}    
         >
-            <ContextMenuItem>
-                <span className="results__context">
+            <ContextMenuItem >
+                <div
+                    onClick={() => dispatchAsync(translateResultedWord(text))}
+                    className="results__context"
+                >
                     Translate this word to {
                         state.fromLangs?.find(l => l[0] === state.fromLanguage)?.[1].toLowerCase()
                     }
-                </span>
+                </div>
             </ContextMenuItem>
         </ContextMenu>
         <CircularProgressbar value={+fr / summaryFreq * 100} text={`${Math.floor(+fr / summaryFreq * 100)}%`} />
