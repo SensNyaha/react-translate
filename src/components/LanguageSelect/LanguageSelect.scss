@@ -1,10 +1,12 @@
 .lang-select {
+    margin-top: 5px;
+
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     
     &__control {
-        min-height: 37px !important;
+        min-height: 45px !important;
         width: 42vw !important;
         max-width: 470px !important;
         background-color: #A9DEFC !important;

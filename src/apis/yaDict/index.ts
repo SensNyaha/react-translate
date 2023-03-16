@@ -35,13 +35,13 @@ export async function returnLangsObject(): Promise<LanguageCanBeTranslatedToObj>
     return langObject;
 }
 
-type TranslationWordObj = {
+export type TranslationWordObj = {
     text: string,
     fr: number,
-    syn: Array<Omit<TranslationWordObj, 'syn' | 'mean'>>,
-    mean: Array<Pick<TranslationWordObj, 'text'>>
+    syn?: Array<Omit<TranslationWordObj, 'syn' | 'mean'>>,
+    mean?: Array<Pick<TranslationWordObj, 'text'>>
 }
-type DefinitionWordObj = {
+export type DefinitionWordObj = {
     text: string,
     pos: string,
     ts: string,

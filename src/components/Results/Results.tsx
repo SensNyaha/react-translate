@@ -18,9 +18,12 @@ const Results = () => {
                 <div className="result__word">
                     {state.translation[0].text.split('').map((l, i) => i === 0 ? l.toUpperCase() : l.toLowerCase())}
                 </div>
-                <div className="result__ts">
-                    {`[${state.translation[0].ts}]`}
-                </div>
+                {state.translation[0].ts 
+                ?   <div className="result__ts">
+                        {`[${state.translation[0].ts}]`}
+                    </div>
+                :   null
+                }
                 <img 
                     src={audioHover ? audioIconGIF : audioIconPNG} 
                     alt="listen to word" 

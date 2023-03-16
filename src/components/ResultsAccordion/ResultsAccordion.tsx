@@ -1,12 +1,10 @@
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-
 import { useSelector } from 'react-redux';
 import { IAppReducer } from '../../store/reducers/appReducer';
 
 import { Accordion, AccordionItem as Item } from '@szhsin/react-accordion';
 
 import './ResultsAccordion.scss';
+import ResultsItem from '../ResultsItem/ResultsItem';
 
 const AccordionItem = ({ header, ...rest } : {[key: string]: React.ReactNode}) => (
     <Item
@@ -31,12 +29,7 @@ const ResultsAccordion = () => {
                 return (
                         <AccordionItem header={t.pos}>
                             {t.tr.map(tr => (
-                                <div className='results__item'>
-                                    <div className="results__item-text">
-                                        {tr.text}
-                                    </div>
-                                    <CircularProgressbar value={+tr.fr / summaryFreq * 100} text={`${Math.floor(+tr.fr / summaryFreq * 100)}%`} />
-                                </div>
+                                <ResultsItem tr={tr} summaryFreq={summaryFreq}/>
                             ))}
                         </AccordionItem>
                 )

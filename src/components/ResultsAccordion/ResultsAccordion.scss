@@ -63,9 +63,18 @@
   
       &-panel {
         padding: 1rem;
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
       }
   
       &--expanded {
+        border-width: 1px;
+        &:hover {
+          transform: none;
+        }
         .chevron {
           transform: rotate(180deg);
         }

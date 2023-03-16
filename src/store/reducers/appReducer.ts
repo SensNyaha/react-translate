@@ -1,8 +1,10 @@
 import { getLangs } from "../../apis/countryName";
 
+import { DefinitionWordObj } from "../../apis/yaDict";
+
 export interface IAppReducer {
     currentInput: string,
-    translation: Array<DefinitonObject> | string | null,
+    translation: Array<DefinitionWordObj> | string | null,
 
     uploadedLangs: Awaited<ReturnType<typeof getLangs> | null>
 
@@ -11,21 +13,6 @@ export interface IAppReducer {
 
     fromLanguage: string,
     toLanguage: string,
-}
-
-type DefinitonObject = {
-    text: string,
-    pos: string,
-    ts: string,
-    tr: Array<TranslationObject>
-}
-type TranslationObject = {
-    text: string,
-    pos: string,
-    gen: string,
-    fr: number,
-    syn: Omit<TranslationObject, 'syn' | 'mean'>,
-    mean: Array<{text: string}>
 }
 
 type ActionType = {
