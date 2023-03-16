@@ -76,5 +76,14 @@
     }
     &__arrow {
         max-height: 37px !important;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.5s;
+
+        &:hover {
+            border: 1px solid #1D71A0;
+            border-radius: 10px;
+            background-color:#38b6ff31;
+        }
     }
 }

@@ -15,8 +15,13 @@ const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordOb
         syn 
         ?   
         <div className="results__item-similar">
-            Похожие слова
-            {syn.map(s => <div>{s.text}</div>)}
+            Похожие слова:
+            {syn.map((s, i) => {
+                const prefix = i === 0 ? ' ' : '';
+                const postfix = i === syn.length - 1 ? '.' : ', ';
+
+                return <span key={s.text}>{prefix + s.text + postfix}</span>
+            })}
         </div>
         : null
     }

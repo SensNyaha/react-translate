@@ -1,12 +1,12 @@
 import { Dispatch, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { store } from "../../store";
-import { loadLanguages } from "../../store/actions/appActions";
+import { loadLanguages, swapLanguages } from "../../store/actions/appActions";
 import { IAppReducer } from "../../store/reducers/appReducer";
 
 import LanguageSelect from "../LanguageSelect/LanguageSelect";
 
-import arrowRight from './arrow-right.png';
+import arrows from './arrows.png';
 
 const LanguagesSwitchers = () => {
     const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>
@@ -26,7 +26,12 @@ const LanguagesSwitchers = () => {
                         />
                 }
                 {
-                    <img src={arrowRight} alt="" className='lang-select__arrow'/>
+                    <img 
+                        src={arrows} 
+                        alt="arrow" 
+                        className='lang-select__arrow'
+                        onClick={() => dispatchAsync(swapLanguages())}
+                    />
                 }
                 {
                     state.toLangs?.length 

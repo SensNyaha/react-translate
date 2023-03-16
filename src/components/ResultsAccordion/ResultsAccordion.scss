@@ -17,10 +17,8 @@
     row-gap: 20px;
 
     &__item {
-      border-top: 1px solid #1D71A0;
-      border-left: 1px solid #1D71A0;
-      border-bottom: 2px solid #1D71A0;
-      border-right: 2px solid #1D71A0;
+      border: 1px solid #1D71A0;
+      border-width: 1px 2px 2px 1px;
 
       border-radius: 20px;
 
@@ -55,6 +53,10 @@
         text-align: left;
         background-color: transparent;
         border: none;
+        border-bottom: 1px solid transparent;
+
+        transition: none;
+
       }
   
       &-content {
@@ -77,6 +79,10 @@
         }
         .chevron {
           transform: rotate(180deg);
+        }
+        .szh-accordion__item-btn {
+          border-color: #1D71A0;
+          transition: border 0.5s;
         }
       }
     }

@@ -25,11 +25,11 @@ const ResultsAccordion = () => {
     return ( 
         <Accordion transition transitionTimeout={200}>
             { Array.isArray(state.translation) && state.translation.map(t => {
-                const summaryFreq = t.tr.reduce((sum, cur) => sum += cur.fr, 0)
+                const summaryFreq = t.tr.reduce((sum, cur) => sum += cur.fr, 0);
                 return (
-                        <AccordionItem header={t.pos}>
+                        <AccordionItem header={t.pos} key={'accordion' + Math.random()}>
                             {t.tr.map(tr => (
-                                <ResultsItem tr={tr} summaryFreq={summaryFreq}/>
+                                <ResultsItem tr={tr} summaryFreq={summaryFreq} key={'result' + Math.random()}/>
                             ))}
                         </AccordionItem>
                 )

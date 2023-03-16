@@ -91,3 +91,10 @@ export const setToLanguage = (value: string) => {
         payload: value
     }
 }
+export const swapLanguages = () => (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
+    const {toLanguage, fromLanguage} = store.getState();
+
+    dispatch(setFromLanguage(toLanguage));
+    dispatch(setToLanguage(fromLanguage));
+    dispatch(setToLangs(toLanguage));
+}
