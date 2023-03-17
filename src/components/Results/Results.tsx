@@ -5,6 +5,7 @@ import { IAppReducer } from '../../store/reducers/appReducer';
 import './Results.scss';
 import audioIconGIF from './audio.gif';
 import audioIconPNG from './audio.png';
+import noWord from './no-word.gif';
 import ResultsAccordion from '../ResultsAccordion/ResultsAccordion';
 
 const Results = () => {
@@ -38,7 +39,12 @@ const Results = () => {
 
     return (
         <>
-            {state.translation}
+            <div className="results">
+                <div className="results__preview">
+                    {state.translation}
+                </div>
+                <img src={noWord} alt="not found" className="results__img" />
+            </div>
         </>
     )
 }

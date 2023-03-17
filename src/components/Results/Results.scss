@@ -1,6 +1,8 @@
 .results {
     font-family: sans-serif;
 
+    margin-top: 30px;
+
     &__preview {
         display: flex;
         justify-content: center;
@@ -14,6 +16,10 @@
     &__ts {
         font-size: 32px;
         color:grey;
+    }
+    &__img {
+        display: block;
+        margin: 20px auto;
     }
     
     .CircularProgressbar {
