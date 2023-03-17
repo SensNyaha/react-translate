@@ -66,7 +66,6 @@ const setFromLangs = () => {
 const setToLangs = (fromLanguage: string) => {
     const { uploadedLangs } = store.getState();
 
-    console.log(Object.keys(uploadedLangs!))
     const neededKey = Object.keys(uploadedLangs!).find(k =>  k.split('-')[0] === fromLanguage) as keyof typeof uploadedLangs;
 
     return {
@@ -123,4 +122,12 @@ const setPreviousWords = (payload: {value: string, from: string, to: string}) =>
         type: 'SET_PREVIOUS_WORDS',
         payload
     }
+}
+export const translatePreviousWord = (wordToTranslate: string, from: string, to: string) => (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
+    dispatch(setFromLanguage(from));
+    dispatch(setToLangs(from));
+    dispatch(setToLanguage(to));
+
+    dispatch(setCurrentInput(wordToTranslate));
+    dispatch(translateCurrentWord());
 }

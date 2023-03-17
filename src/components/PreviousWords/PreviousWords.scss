@@ -1,0 +1,8 @@
+.prev-word {
+    &__word {
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
