@@ -15,11 +15,11 @@ const Results = () => {
         return ( 
         <div className="results">
             <div className="results__preview">
-                <div className="result__word">
+                <div className="results__word">
                     {state.translation[0].text.split('').map((l, i) => i === 0 ? l.toUpperCase() : l.toLowerCase())}
                 </div>
                 {state.translation[0].ts 
-                ?   <div className="result__ts">
+                ?   <div className="results__ts">
                         {`[${state.translation[0].ts}]`}
                     </div>
                 :   null
@@ -27,7 +27,7 @@ const Results = () => {
                 <img 
                     src={audioHover ? audioIconGIF : audioIconPNG} 
                     alt="listen to word" 
-                    className="result__audio" 
+                    className="results__audio" 
                     onMouseEnter={() => setAudioHover(true)}
                     onMouseLeave={() => setAudioHover(false)}
                 />
