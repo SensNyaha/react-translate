@@ -59,3 +59,33 @@
         }
     }
 }
+
+@media screen and (max-width: 780px) {
+    .input-form {
+        &__input {
+            max-width: unset;
+            width: 50vw;
+        }
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .input-form {
+        align-items:stretch;
+        gap: 2px;
+        &__input {
+            max-width: unset;
+            width: 100%;
+        }
+        &__button {
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            img {
+                width: 20px;
+            }
+        }
+    }
+}

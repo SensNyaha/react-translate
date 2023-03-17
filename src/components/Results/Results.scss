@@ -3,20 +3,6 @@
 
     margin-top: 30px;
 
-    &__preview {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        
-        font-size: 40px;
-
-        color: #0b4e75
-    }
-    &__ts {
-        font-size: 32px;
-        color:grey;
-    }
     &__img {
         display: block;
         margin: 20px auto;
@@ -33,5 +19,23 @@
     }
     .CircularProgressbar .CircularProgressbar-trail {
         stroke: #fff;
+    }
+}
+
+
+@media screen and (max-width: 780px) {
+    .results {
+        &__audio {
+            width: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .results {
+        margin-top: 20px;
+        &__img {
+            width: 100%;
+        }
     }
 }

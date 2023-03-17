@@ -1,80 +1,64 @@
-import { CircularProgressbar } from "react-circular-progressbar";
-import 'react-circular-progressbar/dist/styles.css';
+import { Dispatch } from "react";
+
+import { useSelector } from "react-redux";
 
 import { TranslationWordObj } from "../../apis/yaDict";
 
-import './ResultsItem.scss';
+import { CircularProgressbar } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';
 
-import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextmenu';
-import { useSelector } from "react-redux";
+import { store } from "../../store";
 import { IAppReducer } from "../../store/reducers/appReducer";
 import { translateResultedWord } from "../../store/actions/appActions";
-import { store } from "../../store";
-import { Dispatch } from "react";
+
+import './ResultsItem.scss';
+import WithContextMenu from "../WithContextMenu/WithContextMenu";
 
 const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordObj, summaryFreq: number}) => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
     const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>;
     
     return ( <div className='results__item'>
-        <ContextMenuTrigger id={`main-result-${text}`}>
-            <div className="results__item-text">
-                {text}
-            </div>
-        </ContextMenuTrigger>
-        <ContextMenu 
-            id={`main-result-${text}`}
-            hideOnLeave={true}    
-        >
-            <ContextMenuItem >
-                <div
-                    onClick={() => dispatchAsync(translateResultedWord(text))}
-                    className="results__context"
-                >
-                    Translate this word to {
-                        state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()
+        <WithContextMenu 
+            triggerText={text} 
+            triggerClass='results__item-text' 
+            menuItems={
+                [
+                    {
+                        itemClass: 'results__context',
+                        itemText: `Translate this word to ${state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()}`,
+                        itemOnClickF: () => dispatchAsync(translateResultedWord(text))
                     }
-                </div>
-            </ContextMenuItem>
-        </ContextMenu>
+                ]
+            }
+        />
         <CircularProgressbar value={+fr / summaryFreq * 100} text={`${Math.floor(+fr / summaryFreq * 100)}%`} />
-        {
-            syn 
-            ?   
+        
+        { syn ?   
             <div className="results__item-similar">
-                Похожие слова:
+                Similars:
                 {syn.map((s, i) => {
                     const prefix = i === 0 ? ' ' : '';
                     const postfix = i === syn.length - 1 ? '.' : ', ';
 
                     return <span key={s.text}>{
-                        <>
-                            <ContextMenuTrigger id={`main-result-${s.text}`}>
-                                <div className="results__item-similar-text">
-                                    {prefix + s.text + postfix}
-                                </div>
-                            </ContextMenuTrigger>
-                            <ContextMenu 
-                                id={`main-result-${s.text}`}
-                                hideOnLeave={true}    
-                            >
-                                <ContextMenuItem >
-                                    <div
-                                        onClick={() => dispatchAsync(translateResultedWord(s.text))}
-                                        className="results__context"
-                                    >
-                                        Translate this word to {
-                                            state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()
-                                        }
-                                    </div>
-                                </ContextMenuItem>
-                            </ContextMenu>
-                        </>
+                        <WithContextMenu 
+                            triggerText={prefix + s.text + postfix}
+                            triggerClass="results__item-similar-text"
+                            menuItems={
+                                [
+                                    {
+                                        itemClass: 'results__context',
+                                        itemText: `Translate this word to ${state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()}`,
+                                        itemOnClickF: () => dispatchAsync(translateResultedWord(text))
+                                    }
+                                ]
+                            }
+                        />
                     }</span>
                 })}
-            </div>
-            : null
-        }
+            </div> :
+            null }
     </div> 
     );
 }

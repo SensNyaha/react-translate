@@ -1,0 +1,17 @@
+.results__preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    
+    font-size: 40px;
+
+    color: #0b4e75
+}
+
+@media screen and (max-width: 780px) {
+    .results__preview {
+        font-size: 30px;
+        text-align: center;
+    }
+}

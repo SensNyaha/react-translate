@@ -87,3 +87,36 @@
         }
     }
 }
+
+@media screen and (max-width: 780px) {
+    .lang-select {
+        &__placeholder {
+            font-size: 14px !important;
+        }    
+        &__single-value, &__item {
+            font-weight: 700 !important;
+            font-size: 15px !important;
+        }
+        &__control {
+            min-height: 38px !important;
+            width: 45vw !important;
+        }
+        &__arrow {
+            max-height: 25px;
+            padding: 2px;
+        }
+    }
+}
+@media screen and (max-width: 580px) {
+    .lang-select {
+        flex-direction: column;
+
+        margin-top: 40px;
+        &__control {
+            width: 95vw !important;
+        }
+        &__arrow {
+            transform: rotateZ(90deg);
+        }
+    }
+}
