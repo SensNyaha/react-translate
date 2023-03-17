@@ -29,7 +29,7 @@ const WithContextMenu = ({ triggerText, triggerClass, menuItems }: IWithContextM
                 {
                     menuItems.map(item => {
                         return (
-                            <ContextMenuItem >
+                            <ContextMenuItem key={item.itemText}>
                                 <div
                                     onClick={item.itemOnClickF}
                                     className={item.itemClass}

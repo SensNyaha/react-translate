@@ -50,7 +50,7 @@ const ResultsItem = ({tr: {text, fr, syn}, summaryFreq} : {tr: TranslationWordOb
                                     {
                                         itemClass: 'results__context',
                                         itemText: `Translate this word to ${state.fromLangs?.find(l => l[0] === state.translatedFrom)?.[1].toLowerCase()}`,
-                                        itemOnClickF: () => dispatchAsync(translateResultedWord(text))
+                                        itemOnClickF: () => dispatchAsync(translateResultedWord(s.text))
                                     }
                                 ]
                             }

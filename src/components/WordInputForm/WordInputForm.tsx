@@ -12,7 +12,7 @@ const WordInputForm = () => {
     const dispatchAsync = store.dispatch as typeof store.dispatch | Dispatch<any>
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
 
-    if (state.fromLanguage && state.toLanguage) {
+    if (state.fromLanguage && state.toLanguage || state.previousWords.length) {
         return ( 
             <form 
                 className="input-form" 
