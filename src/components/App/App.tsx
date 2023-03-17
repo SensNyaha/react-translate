@@ -12,6 +12,7 @@ import './App.scss';
 
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
+import PreviousWords from '../PreviousWords/PreviousWords';
 
 const App = () => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
@@ -26,6 +27,7 @@ const App = () => {
             <LanguagesSwitchers/>
             <WordInputForm/>
             <Results/>
+            <PreviousWords/>
         </SimpleBar>
     );
 }
