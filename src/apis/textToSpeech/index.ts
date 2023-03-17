@@ -71,16 +71,21 @@ export function transpileYandexLangsToVoiceRSSLangs (yandexLangName: string) {
 }
 
 export async function makeRequestToVoiceRSSAndPlay (wordToSpeech: string, yandexTypedLang: string) {
-    const ctx = new AudioContext();
+    try {
+        const ctx = new AudioContext();
     
-    const response = await fetch(`http://api.voicerss.org/?key=${API_KEY}&hl=${transpileYandexLangsToVoiceRSSLangs(yandexTypedLang)}&c=MP3&f=48khz_16bit_stereo&src=${wordToSpeech}`);
+        const response = await fetch(`http://api.voicerss.org/?key=${API_KEY}&hl=${transpileYandexLangsToVoiceRSSLangs(yandexTypedLang)}&c=MP3&f=48khz_16bit_stereo&src=${wordToSpeech}`);
 
-    const arrayBuffer = await response.arrayBuffer();
+        const arrayBuffer = await response.arrayBuffer();
 
-    const audio = await ctx.decodeAudioData(arrayBuffer);
+        const audio = await ctx.decodeAudioData(arrayBuffer);
 
-    const playSound = ctx.createBufferSource();
-    playSound.buffer = audio;
-    playSound.connect(ctx.destination);
-    playSound.start(ctx.currentTime);
+        const playSound = ctx.createBufferSource();
+        playSound.buffer = audio;
+        playSound.connect(ctx.destination);
+        playSound.start(ctx.currentTime);
+    }
+    catch (e) {
+        alert('Что-то пошло не так, ошибка: ' + (e as Error).message);
+    }
 }
