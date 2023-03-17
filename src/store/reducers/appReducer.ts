@@ -85,9 +85,14 @@ export function appReducer(state: IAppReducer = initialAppState, action: ActionT
                 toLanguage: action.payload as string
             }
         case 'SET_PREVIOUS_WORDS':
+            type PrevWordObj = {value: string, from: string, to: string};
+            const {value, from, to} = action.payload as PrevWordObj;
+
+            const newArray = state.previousWords.filter((w, i) => (w.value !== value || w.from !== from || w.to !== to) && i < 5);
+
             return {
                 ...state,
-                previousWords: [action.payload as {value: string, from: string, to: string}, ...state.previousWords]
+                previousWords: [action.payload as PrevWordObj, ...newArray]
             }
         default: 
             return state

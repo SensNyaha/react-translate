@@ -67,10 +67,7 @@ const setToLangs = (fromLanguage: string) => {
     const { uploadedLangs } = store.getState();
 
     console.log(Object.keys(uploadedLangs!))
-    const neededKey = Object.keys(uploadedLangs!).find(k => {
-        console.log(k.split('-')[0], fromLanguage);
-        return k.split('-')[0] === fromLanguage
-    }) as keyof typeof uploadedLangs;
+    const neededKey = Object.keys(uploadedLangs!).find(k =>  k.split('-')[0] === fromLanguage) as keyof typeof uploadedLangs;
 
     return {
         type: 'SET_TO_LANGS',
