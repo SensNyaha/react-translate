@@ -1,6 +1,7 @@
 {
   "name": "react-translator",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@szhsin/react-accordion": "^1.2.0",
