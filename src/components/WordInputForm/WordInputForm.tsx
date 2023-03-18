@@ -13,19 +13,27 @@ const WordInputForm = () => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
 
     if (state.fromLanguage && state.toLanguage || state.previousWords.length) {
-        return ( 
-            <form 
-                className="input-form" 
-                onSubmit={(e)=> {
-                    e.preventDefault();
-                    dispatchAsync(translateCurrentWord());
-                }}
-            >
-            <input className="input-form__input" type="text" value={state.currentInput} onChange={(e) => {dispatch(setCurrentInput(e.target.value))}}/>
+        return (
+          <form
+            className="input-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              dispatchAsync(translateCurrentWord());
+            }}
+          >
+            <input
+              className="input-form__input"
+              type="search"
+              value={state.currentInput}
+              onChange={(e) => {
+                dispatch(setCurrentInput(e.target.value));
+              }}
+            />
             <button className="input-form__button">
-                <img src={arrowRight} alt="" />
+              <img src={arrowRight} alt="" />
             </button>
-            </form> );
+          </form>
+        );
     }
     return null;
 
