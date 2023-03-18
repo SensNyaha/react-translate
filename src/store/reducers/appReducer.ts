@@ -3,6 +3,9 @@ import { getLangs } from "../../apis/countryName";
 import { DefinitionWordObj } from "../../apis/yaDict";
 
 export interface IAppReducer {
+    loading: boolean,
+    errorMessage: string | null,
+
     currentInput: string,
     previousWords: {value: string, from: string, to: string}[],
     
@@ -25,6 +28,9 @@ type ActionType = {
 }
 
 const initialAppState: IAppReducer = {
+    loading: false,
+    errorMessage: null,
+
     currentInput: '',
     previousWords: [],
 
@@ -43,6 +49,16 @@ const initialAppState: IAppReducer = {
 
 export function appReducer(state: IAppReducer = initialAppState, action: ActionType): IAppReducer {
     switch (action.type) {
+        case 'SET_LOADING': 
+            return {
+                ...state,
+                loading: action.payload as boolean
+            }
+        case 'SET_ERROR': 
+            return {
+                ...state,
+                errorMessage: action.payload as string | null
+            }
         case 'SET_CURRENT_INPUT': 
             return {
                 ...state,

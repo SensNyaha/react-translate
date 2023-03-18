@@ -13,6 +13,7 @@ import './App.scss';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import PreviousWords from '../PreviousWords/PreviousWords';
+import Loader from '../Loader/Loader';
 
 const App = () => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
@@ -23,12 +24,15 @@ const App = () => {
     }, [state.currentInput])
 
     return ( 
-        <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }} scrollableNodeProps={{ref: scrollRef}}>
-            <LanguagesSwitchers/>
-            <WordInputForm/>
-            <Results/>
-            <PreviousWords/>
-        </SimpleBar>
+        <>
+            <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }} scrollableNodeProps={{ref: scrollRef}}>
+                <LanguagesSwitchers/>
+                <WordInputForm/>
+                <Results/>
+                <PreviousWords/>
+            </SimpleBar>
+            <Loader/>
+        </>
     );
 }
  

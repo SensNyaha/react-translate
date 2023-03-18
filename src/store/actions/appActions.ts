@@ -7,6 +7,18 @@ import {translateWord, YA_DICT_API_KEY} from '../../apis/yaDict';
 import { store } from "..";
 import { getLangs } from "../../apis/countryName";
 
+const setLoading = (payload: boolean) => {
+    return {
+        type: 'SET_LOADING',
+        payload
+    }
+}
+const setError = (payload: string | null) => {
+    return {
+        type: 'SET_ERROR',
+        payload
+    }
+}
 
 export const setCurrentInput = (value: string) => {
     return {
