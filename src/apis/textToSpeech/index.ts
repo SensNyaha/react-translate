@@ -80,7 +80,7 @@ export async function makeRequestToVoiceRSSAndPlay (wordToSpeech: string, yandex
         
         const ctx = new AudioContext();
     
-        const response = await fetch(`http://api.voicerss.org/?key=${API_KEY}&hl=${transpileYandexLangsToVoiceRSSLangs(yandexTypedLang)}&c=MP3&f=48khz_16bit_stereo&src=${wordToSpeech}`);
+        const response = await fetch(`https://api.voicerss.org/?key=${API_KEY}&hl=${transpileYandexLangsToVoiceRSSLangs(yandexTypedLang)}&c=MP3&f=48khz_16bit_stereo&src=${wordToSpeech}`);
 
         const arrayBuffer = await response.arrayBuffer();
 
