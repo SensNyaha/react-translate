@@ -1,3 +1,5 @@
+import { setError } from './../../store/actions/appActions';
+import { store } from "../../store";
 const API_KEY = '9741accfe6c84e9f88ed3fec756ace46';
 
 
@@ -86,6 +88,6 @@ export async function makeRequestToVoiceRSSAndPlay (wordToSpeech: string, yandex
         playSound.start(ctx.currentTime);
     }
     catch (e) {
-        alert('Что-то пошло не так, ошибка: ' + (e as Error).message);
+        store.dispatch(setError((e as Error).message))
     }
 }

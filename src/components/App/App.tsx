@@ -25,13 +25,15 @@ const App = () => {
 
     return ( 
         <>
+            <Loader/>
             <SimpleBar style={{ maxHeight: 'calc(100vh - 10px)', height: '100%' }} scrollableNodeProps={{ref: scrollRef}}>
                 <LanguagesSwitchers/>
                 <WordInputForm/>
                 <Results/>
                 <PreviousWords/>
+            {state.errorMessage}
             </SimpleBar>
-            <Loader/>
+
         </>
     );
 }

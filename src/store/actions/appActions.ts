@@ -7,13 +7,13 @@ import {translateWord, YA_DICT_API_KEY} from '../../apis/yaDict';
 import { store } from "..";
 import { getLangs } from "../../apis/countryName";
 
-const setLoading = (payload: boolean) => {
+export const setLoading = (payload: boolean) => {
     return {
         type: 'SET_LOADING',
         payload
     }
 }
-const setError = (payload: string | null) => {
+export const setError = (payload: string | null) => {
     return {
         type: 'SET_ERROR',
         payload
@@ -40,6 +40,8 @@ export const setTranslationLangs = () => {
     }
 }
 export const translateCurrentWord = () => async (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
     const { fromLanguage, toLanguage, currentInput } = store.getState();
 
     const response = await translateWord({key: YA_DICT_API_KEY, lang: `${fromLanguage}-${toLanguage}`, text: currentInput});
@@ -48,9 +50,12 @@ export const translateCurrentWord = () => async (dispatch: ThunkDispatch<ReturnT
         dispatch(setTranslation(response.def));
         dispatch(setPreviousWords({value: currentInput, from: fromLanguage, to: toLanguage}))
         dispatch(setTranslationLangs());
+        dispatch(setLoading(false));
     }
     else {
         dispatch(setTranslation('Перевести слово невозможно'))
+        dispatch(setLoading(false));
+        dispatch(setError('Перевести слово невозможно'));
     }
 }
 
@@ -86,10 +91,16 @@ const setToLangs = (fromLanguage: string) => {
     }
 }
 export const loadLanguages = () => async (dispatch: ThunkDispatch<ReturnType<typeof appReducer>, void, AnyAction>) => {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
     getLangs()
         .then(res => {
             dispatch(setUploadedLangs(res));
             dispatch(setFromLangs());
+            dispatch(setLoading(false));
+        })
+        .catch(() => {
+            dispatch(setError('Возникла ошибка при загрузке доступных языков'));
         })
 }
 
