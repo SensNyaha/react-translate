@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-translate/static/css/main.0fb45f4f.css",
-    "main.js": "/react-translate/static/js/main.c719a0b0.js",
+    "main.js": "/react-translate/static/js/main.b692e343.js",
     "static/media/no-word.gif": "/react-translate/static/media/no-word.5a6b3fdb788da8cb9255.gif",
     "static/media/do.svg": "/react-translate/static/media/do.d2287a1e1eee0805fc27.svg",
     "static/media/rs.svg": "/react-translate/static/media/rs.dc155455e86e12200cb5.svg",
@@ -271,10 +271,10 @@
     "static/media/bd.svg": "/react-translate/static/media/bd.0ad8c443ef4d47ea0497.svg",
     "static/media/id.svg": "/react-translate/static/media/id.f624e2c8444a7794b357.svg",
     "main.0fb45f4f.css.map": "/react-translate/static/css/main.0fb45f4f.css.map",
-    "main.c719a0b0.js.map": "/react-translate/static/js/main.c719a0b0.js.map"
+    "main.b692e343.js.map": "/react-translate/static/js/main.b692e343.js.map"
   },
   "entrypoints": [
     "static/css/main.0fb45f4f.css",
-    "static/js/main.c719a0b0.js"
+    "static/js/main.b692e343.js"
   ]
 }
