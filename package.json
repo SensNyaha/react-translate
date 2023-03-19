@@ -1,7 +1,7 @@
 {
   "name": "react-translator",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "https://sensnyaha.github.io/react-translate",
   "private": true,
   "dependencies": {
     "@szhsin/react-accordion": "^1.2.0",
@@ -25,6 +25,7 @@
     "@types/node": "^16.18.14",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "gh-pages": "^5.0.0",
     "sass": "^1.58.3",
     "typescript": "^4.9.5"
   },
@@ -32,7 +33,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": [
