@@ -1,5 +1,7 @@
 import { setError } from './../../store/actions/appActions';
 import { store } from "../../store";
+import { setLoading } from './../../store/actions/appActions';
+
 const API_KEY = '9741accfe6c84e9f88ed3fec756ace46';
 
 
@@ -53,7 +55,7 @@ const arrayYandexLangsToVoiceRSSLangs: [string, string][] = [
         'es', 'es-es'
     ],
     [
-        'ru', 'ru-ru'
+        'ru', 'ru-ru&v=Marina'
     ],
     [
         'sv', 'sv-se'
@@ -74,6 +76,8 @@ export function transpileYandexLangsToVoiceRSSLangs (yandexLangName: string) {
 
 export async function makeRequestToVoiceRSSAndPlay (wordToSpeech: string, yandexTypedLang: string) {
     try {
+        store.dispatch(setLoading(true));
+        
         const ctx = new AudioContext();
     
         const response = await fetch(`http://api.voicerss.org/?key=${API_KEY}&hl=${transpileYandexLangsToVoiceRSSLangs(yandexTypedLang)}&c=MP3&f=48khz_16bit_stereo&src=${wordToSpeech}`);
@@ -86,8 +90,10 @@ export async function makeRequestToVoiceRSSAndPlay (wordToSpeech: string, yandex
         playSound.buffer = audio;
         playSound.connect(ctx.destination);
         playSound.start(ctx.currentTime);
+        store.dispatch(setLoading(false));
     }
     catch (e) {
-        store.dispatch(setError((e as Error).message))
+        store.dispatch(setLoading(false));
+        store.dispatch(setError((e as Error).stack || (e as Error).message))
     }
 }

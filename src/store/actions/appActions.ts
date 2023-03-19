@@ -53,9 +53,9 @@ export const translateCurrentWord = () => async (dispatch: ThunkDispatch<ReturnT
         dispatch(setLoading(false));
     }
     else {
-        dispatch(setTranslation('Перевести слово невозможно'))
+        dispatch(setTranslation('Unable to translate this word'))
         dispatch(setLoading(false));
-        dispatch(setError('Перевести слово невозможно'));
+        dispatch(setError('Unable to translate this word'));
     }
 }
 
@@ -100,7 +100,7 @@ export const loadLanguages = () => async (dispatch: ThunkDispatch<ReturnType<typ
             dispatch(setLoading(false));
         })
         .catch(() => {
-            dispatch(setError('Возникла ошибка при загрузке доступных языков'));
+            dispatch(setError('Unable to load available languages from our server'));
         })
 }
 

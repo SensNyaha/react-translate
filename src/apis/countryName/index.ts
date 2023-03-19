@@ -31,11 +31,10 @@ export async function getLangs(): Promise<{[key: string]: string[]}> {
                 }) 
             }
         })
-    
         return countriesObject;
     }
     catch (e) {
-        store.dispatch(setError((e as Error).message))
+        store.dispatch(setError((e as Error).stack || (e as Error).message))
         return {}
     }
 }

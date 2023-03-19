@@ -16,7 +16,7 @@ async function loadAvailableLangs(apiKey: typeof YA_DICT_API_KEY): Promise<Array
         return jsoned;
     }
     catch (e) {
-        store.dispatch(setError((e as Error).message))
+        store.dispatch(setError((e as Error).stack || (e as Error).message))
         return []
     }
 }
@@ -45,7 +45,7 @@ export async function returnLangsObject(): Promise<LanguageCanBeTranslatedToObj>
         return langObject;
     }
     catch (e) {
-        store.dispatch(setError((e as Error).message))
+        store.dispatch(setError((e as Error).stack || (e as Error).message))
         return {}
     }
 }
@@ -73,7 +73,7 @@ export async function translateWord(configObj: TranslateWordArgsType): Promise<T
         return jsoned;
     }
     catch (e) {
-        store.dispatch(setError((e as Error).message))
+        store.dispatch(setError((e as Error).stack || (e as Error).message))
         return {def: []}
     }
 }

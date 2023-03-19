@@ -14,6 +14,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 import PreviousWords from '../PreviousWords/PreviousWords';
 import Loader from '../Loader/Loader';
+import ErrorModal from '../ErrorModal/ErrorModal';
 
 const App = () => {
     const state = useSelector((state: IAppReducer) => state) as IAppReducer;
@@ -31,9 +32,9 @@ const App = () => {
                 <WordInputForm/>
                 <Results/>
                 <PreviousWords/>
-            {state.errorMessage}
             </SimpleBar>
 
+            <ErrorModal/>
         </>
     );
 }
